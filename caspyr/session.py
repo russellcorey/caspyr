@@ -16,6 +16,8 @@ logger = logging.getLogger(__name__)
 logging.getLogger('requests').setLevel(logging.CRITICAL)
 logging.getLogger('urllib3').setLevel(logging.CRITICAL)
 
+API_AUTH_URL = 'https://console.cloud.vmware.com/csp/gateway/am/api'
+API_BASE_URL = 'https://api.mgmt.cloud.vmware.com'
 
 class Session(object):
     """
@@ -29,11 +31,11 @@ class Session(object):
         self.headers = {'Content-Type': 'application/json',
                         'Authorization': f'Bearer {self.token}',
 			'csp-auth-token': f'{self.token}'}
-        self.baseurl = 'https://api.mgmt.cloud.vmware.com'
+        self.baseurl = API_BASE_URL
 
     @classmethod
     def login(self, refresh_token):
-            baseurl = 'https://console.cloud.vmware.com/csp/gateway/am/api'
+            baseurl = API_AUTH_URL
             uri = f'/auth/api-tokens/authorize?refresh_token={refresh_token}'
             headers = {'Content-Type': 'application/json'}
             payload = {}
